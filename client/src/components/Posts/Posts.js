@@ -2,8 +2,12 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Row, Col, Spin, Card, Image } from 'antd';
 import './style.css';
+import { Button } from 'antd';
+import { useDispatch } from 'react-redux';
+import { deletePost } from '../../actions/Posts';
 
-function Posts() {
+function Posts({ setCurrentId }) {
+  const dispatch = useDispatch();
   const post = useSelector((state) => state.posts);
   const { Meta } = Card;
 
@@ -18,7 +22,7 @@ function Posts() {
         ) : (
           post.map((data) => {
             return (
-              <Col className="gutter-row" span={8}>
+              <Col className="gutter-row" span={8} key={data._id}>
                 <Card
                   hoverable
                   style={{ width: 280 }}
@@ -46,16 +50,30 @@ function Posts() {
                   <hr />
 
                   {data.tags.map((e) => (
-                    <p style={{ fontSize: '10px', margin: ' 5px 0px', color: 'gray' }}>
+                    <p style={{ fontSize: '10px', margin: ' 5px 0px', color: 'gray' }} key={e}>
                       #{data.tags}
                     </p>
                   ))}
                   <Meta
                     title={data.title}
                     description={
-                      <p style={{ fontSize: '12px', fontWeight: 'bold' }}>`${data.message}`</p>
+                      <p style={{ fontSize: '12px', fontWeight: 'bold' }}>{data.message}</p>
                     }
                   />
+                  <div
+                    style={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px' }}
+                  >
+                    <div style={{ display: 'flex', flexDirection: 'column' }}>
+                      <Button onClick={() => dispatch(deletePost(data._id))}>Delete</Button>
+                      <Button onClick={() => setCurrentId(data._id)} style={{ marginTop: '10px' }}>
+                        Edit
+                      </Button>
+                    </div>
+                    <div>
+                      <Button>Like</Button>
+                      <span style={{ marginLeft: '5px' }}>: {data.likeCount}</span>
+                    </div>
+                  </div>
                 </Card>
               </Col>
             );
