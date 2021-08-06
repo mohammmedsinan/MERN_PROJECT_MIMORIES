@@ -4,7 +4,7 @@ import { Row, Col, Spin, Card, Image } from 'antd';
 import './style.css';
 import { Button } from 'antd';
 import { useDispatch } from 'react-redux';
-import { deletePost } from '../../actions/Posts';
+import { deletePost, likePost } from '../../actions/Posts';
 
 function Posts({ setCurrentId }) {
   const dispatch = useDispatch();
@@ -14,7 +14,7 @@ function Posts({ setCurrentId }) {
   return (
     <>
       <Row
-        gutter={[16, 24]}
+        gutter={[216, 24]}
         style={{ display: 'flex', justifyContent: 'space-between', padding: '10px' }}
       >
         {!post.length ? (
@@ -50,8 +50,17 @@ function Posts({ setCurrentId }) {
                   <hr />
 
                   {data.tags.map((e) => (
-                    <p style={{ fontSize: '10px', margin: ' 5px 0px', color: 'gray' }} key={e}>
-                      #{data.tags}
+                    <p
+                      style={{
+                        fontSize: '10px',
+                        margin: ' 5px 0px',
+                        color: 'gray',
+                        display: 'inline',
+                        margin: '0px 2px',
+                      }}
+                      key={e}
+                    >
+                      #{e}
                     </p>
                   ))}
                   <Meta
@@ -70,7 +79,7 @@ function Posts({ setCurrentId }) {
                       </Button>
                     </div>
                     <div>
-                      <Button>Like</Button>
+                      <Button onClick={() => dispatch(likePost(data._id))}>&nbsp;Like&nbsp;</Button>
                       <span style={{ marginLeft: '5px' }}>: {data.likeCount}</span>
                     </div>
                   </div>

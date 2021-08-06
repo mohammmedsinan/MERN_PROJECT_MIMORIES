@@ -65,7 +65,7 @@ function FormInput({ currentId, setCurrentId }) {
         <Input
           style={{ margin: '10px 0px' }}
           placeholder="Tags"
-          onChange={(e) => setPostData({ ...postData, tags: e.target.value })}
+          onChange={(e) => setPostData({ ...postData, tags: e.target.value.split(',') })}
           value={postData.tags}
         />
 

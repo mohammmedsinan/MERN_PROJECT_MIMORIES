@@ -12,7 +12,7 @@ function App() {
   const newPosts = useSelector((state) => state.posts);
   useEffect(() => {
     dispatch(getPosts());
-  }, [currentId, dispatch, newPosts]);
+  }, [currentId, dispatch, newPosts, newPosts.likeCount]);
   return (
     <div>
       <Layout>
